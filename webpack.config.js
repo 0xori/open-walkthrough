@@ -4,7 +4,7 @@ var  libraryName = 'walkThoughExecutor';
 var outputFile = libraryName + '.js';
 
 module.exports = {
-    entry: './main.js',
+    entry: './src/walkThoughExecutor.js',
     devtool: 'source-map',
   	output: {
     	path: __dirname + '/lib',
