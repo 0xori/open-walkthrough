@@ -1,6 +1,6 @@
 const webpack = require('webpack');
 var path = require("path");
-var  libraryName = 'walkThoughExecutor';
+var  libraryName = 'open-walkthrough';
 var outputFile = libraryName + '.js';
 
 module.exports = {
