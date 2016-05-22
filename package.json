@@ -1,7 +1,7 @@
 {
   "name": "open-walkthrough",
   "version": "1.0.0",
-  "description": "",
+  "description": "\"# open-walkthrough\"",
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -18,5 +18,16 @@
     "babel-preset-es2015": "^6.9.0",
     "imports-loader": "^0.6.5",
     "webpack": "^1.13.1"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/0xori/open-walkthrough.git"
+  },
+  "keywords": [
+    "walkthrough"
+  ],
+  "bugs": {
+    "url": "https://github.com/0xori/open-walkthrough/issues"
+  },
+  "homepage": "https://github.com/0xori/open-walkthrough#readme"
 }
