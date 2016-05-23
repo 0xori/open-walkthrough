@@ -61,6 +61,7 @@ var walkThoughExecutor = {
             title: action.data.title,
             content: action.data.description,
             placement: action.data.placement ? action.data.placement : "auto",
+            container: action.data.container ? action.data.container : false,
             template: '<div class="popover vt-popover walkthrough-popover" role="tooltip"><div class="arrow"></div><h3 class="popover-title"></h3><div class="popover-content"></div><button class="nextPop">Next</button></button></div>'
         };
 

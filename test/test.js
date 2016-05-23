@@ -33,6 +33,7 @@ var action4 = {
     type: actionTypes.ACTION_POPOVER,
     data: {
         title: "Click Here",
+        container: "body",
         description: "Get in Shape"
     }
 };

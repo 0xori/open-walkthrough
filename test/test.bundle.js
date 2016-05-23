@@ -55,7 +55,7 @@
 	    data: {
 	        title: "Click Here",
 	        description: "Get in Shape",
-	         placement: "right"
+	        placement: "right"
 	    }
 	};
 	var action2 = {
@@ -79,6 +79,7 @@
 	    type: actionTypes.ACTION_POPOVER,
 	    data: {
 	        title: "Click Here",
+	        container: "body",
 	        description: "Get in Shape"
 	    }
 	};
@@ -9977,6 +9978,7 @@
 	            title: action.data.title,
 	            content: action.data.description,
 	            placement: action.data.placement ? action.data.placement : "auto",
+	            container: action.data.container ? action.data.container : false,
 	            template: '<div class="popover vt-popover walkthrough-popover" role="tooltip"><div class="arrow"></div><h3 class="popover-title"></h3><div class="popover-content"></div><button class="nextPop">Next</button></button></div>'
 	        };
 
