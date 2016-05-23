@@ -89,6 +89,7 @@
 	$(document).ready(function () {
 	    walkThoughExecutor.setActions(actions);
 	    walkThoughExecutor.run();
+	    walkThoughExecutor.registerOnWalkThroughFinish(walkThoughExecutor.resetWalkthrough);
 	});
 
 /***/ },
@@ -9956,6 +9957,30 @@
 	        }
 	    },
 
+	    resetActions: function(){
+	        for(var i =0; i< actionsStack.length; i++){
+	            walkThoughExecutor.resetAction(actionsStack[i]);
+	        }
+	        actionsStack = [];
+	        currAction = 0;
+	    },
+
+	    resetAction: function(action){
+	        switch (action.type){
+	            case actionTypes.ACTION_POPOVER:
+	                walkThoughExecutor.destroyPopover(action.selector);
+	                break;
+	        }
+	    },
+
+	    resetWalkthrough: function(){
+	        walkThoughExecutor.resetActions();
+	        beforeWalkthroughStackCallback = [];
+	        beforeNextStackCallback = [];
+	        afterNextStackCallback = [];
+	        finishStackCallbacks = [];
+	    },
+
 	    handleNext: function(){
 
 	        var prevActionIndex = currAction;
@@ -9993,6 +10018,10 @@
 
 	    hidePopover: function(selector){
 	        $(selector).popover("hide");
+	    },
+
+	    destroyPopover: function(selector){
+	        $(selector).popover("destroy");
 	    },
 
 	    registerOnWalkThroughFinish: function(callback){

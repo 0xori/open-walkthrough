@@ -40,12 +40,23 @@ var walkThoughExecutor = {
     },
 
     resetActions: function(){
+        for(var i =0; i< actionsStack.length; i++){
+            walkThoughExecutor.resetAction(actionsStack[i]);
+        }
         actionsStack = [];
         currAction = 0;
     },
 
+    resetAction: function(action){
+        switch (action.type){
+            case actionTypes.ACTION_POPOVER:
+                walkThoughExecutor.destroyPopover(action.selector);
+                break;
+        }
+    },
+
     resetWalkthrough: function(){
-        this.resetActions();
+        walkThoughExecutor.resetActions();
         beforeWalkthroughStackCallback = [];
         beforeNextStackCallback = [];
         afterNextStackCallback = [];
@@ -89,6 +100,10 @@ var walkThoughExecutor = {
 
     hidePopover: function(selector){
         $(selector).popover("hide");
+    },
+
+    destroyPopover: function(selector){
+        $(selector).popover("destroy");
     },
 
     registerOnWalkThroughFinish: function(callback){

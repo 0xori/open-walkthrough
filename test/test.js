@@ -43,4 +43,5 @@ var actions = [action1, action2, action3, action4];
 $(document).ready(function () {
     walkThoughExecutor.setActions(actions);
     walkThoughExecutor.run();
+    walkThoughExecutor.registerOnWalkThroughFinish(walkThoughExecutor.resetWalkthrough);
 });
