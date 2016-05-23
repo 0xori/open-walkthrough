@@ -39,6 +39,19 @@ var walkThoughExecutor = {
         }
     },
 
+    resetActions: function(){
+        actionsStack = [];
+        currAction = 0;
+    },
+
+    resetWalkthrough: function(){
+        this.resetActions();
+        beforeWalkthroughStackCallback = [];
+        beforeNextStackCallback = [];
+        afterNextStackCallback = [];
+        finishStackCallbacks = [];
+    },
+
     handleNext: function(){
 
         var prevActionIndex = currAction;
