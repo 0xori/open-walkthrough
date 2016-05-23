@@ -44,7 +44,7 @@ var walkThoughExecutor = {
         var prevActionIndex = currAction;
         currAction++;
         var prevAction = actionsStack[prevActionIndex];
-        if(currAction + 1 >= actionsStack.length){
+        if(currAction + 1 > actionsStack.length){
             walkThoughExecutor.hidePopover(prevAction.selector);
             walkThoughExecutor.onWalkThroughFinish();
         }
@@ -60,7 +60,8 @@ var walkThoughExecutor = {
         var options ={
             title: action.data.title,
             content: action.data.description,
-            template: '<div class="popover" role="tooltip"><div class="arrow"></div><h3 class="popover-title"></h3><div class="popover-content"></div><button class="nextPop">Next</button></button></div>'
+            placement: action.data.placement ? action.data.placement : "auto",
+            template: '<div class="popover vt-popover walkthrough-popover" role="tooltip"><div class="arrow"></div><h3 class="popover-title"></h3><div class="popover-content"></div><button class="nextPop">Next</button></button></div>'
         };
 
        this.showPopover(action.selector, options);

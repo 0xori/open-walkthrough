@@ -1,18 +1,12 @@
 const webpack = require('webpack');
 var path = require("path");
-var  libraryName = 'open-walkthrough';
-var outputFile = libraryName + '.js';
 
 module.exports = {
-    entry: './src/walkThoughExecutor.js',
-    devtool: 'source-map',
-  	output: {
-    	path: __dirname + '/lib',
-    	filename: outputFile,
-    	library: libraryName,
-    	libraryTarget: 'umd',
-    	umdNamedDefine: true
-  },
+    entry: './test.js',
+    output: {
+        path: './',
+        filename: "test.bundle.js"
+    },
     module: {
         loaders: [
             {
@@ -33,21 +27,7 @@ module.exports = {
                 loader: 'style!css!less'
             },
             {test: /\.(png|jpg)$/,loader: 'url?limit=25000'},
-           
-
-        ] 
+          
+        ]
     },
-    plugins: [
-        new webpack.ProvidePlugin({
-            $: "jquery",
-            jQuery: "jquery"
-        })
-    ],
-    resolve: {
-   		root: path.resolve('./src'),
-    	extensions: ['', '.js']
-  }
 }
-
-
-

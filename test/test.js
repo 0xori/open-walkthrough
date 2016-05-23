@@ -1,14 +1,15 @@
-const $ = require("jquery");
-var walkThoughExecutor = require("./src/walkThoughExecutor");
-var actionTypes = require("./src/actionTypes");
+$ = require("jquery");
+jQuery = require("jquery");
+var walkThoughExecutor = require("../src/walkThoughExecutor");
+var actionTypes = require("../src/actionTypes");
 
 var action1 = {
     selector: '#yo1',
     type: actionTypes.ACTION_POPOVER,
-    placement: "bottom"
     data: {
         title: "Click Here",
-        description: "Get in Shape"
+        description: "Get in Shape",
+        placement: "right"
     }
 };
 var action2 = {
