@@ -5,7 +5,7 @@ var actionTypes = require("./src/actionTypes");
 var action1 = {
     selector: '#yo1',
     type: actionTypes.ACTION_POPOVER,
-    placement: "bottom"
+    placement: "bottom",
     data: {
         title: "Click Here",
         description: "Get in Shape"

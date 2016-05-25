@@ -1,0 +1,17 @@
+#open-walkthrough-overlay{
+    position: absolute;
+    top:0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1050;
+}
+
+#open-walkthrough-floating-button{
+    position: fixed;
+    right: 15px;
+    bottom: 15px;
+    background: #00abc0;
+    cursor: pointer;
+    padding: 10px;
+}

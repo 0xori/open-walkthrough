@@ -1,6 +1,7 @@
 /**
  * Created by 0xori on 18-May-16.
  */
+var style = require("../assets/css/main.css");
  const $ = require("jquery");
  const jQuery = require("jquery");
  require('bootstrap');
@@ -17,7 +18,25 @@ var finishStackCallbacks = [];
 
 var walkThoughExecutor = {
 
+    _backgroundLayerSelector : "open-walkthrough-overlay",
+
+    _floatingButtonSelector: "open-walkthrough-floating-button",
+
+    _floatingButtonText: "Guide Me",
+
+    init: function(){
+        walkThoughExecutor.renderBackgroundLayer();
+        walkThoughExecutor.showBackgroundLayer();
+        walkThoughExecutor.renderFloatingButton();
+        walkThoughExecutor.hideFloatingButton();
+    },
+
+    setFloatingButtonText: function(text){
+        walkThoughExecutor._floatingButtonText = text;
+    },
+
     setActions: function(actions){
+        walkThoughExecutor.resetActions();
         actionsStack = actions;
     },
 
@@ -39,12 +58,20 @@ var walkThoughExecutor = {
         }
     },
 
+    stopAction: function(action){
+        switch (action.type){
+            case actionTypes.ACTION_POPOVER:
+                walkThoughExecutor.hidePopover(action.selector);
+                break;
+        }
+    },
+
     resetActions: function(){
         for(var i =0; i< actionsStack.length; i++){
             walkThoughExecutor.resetAction(actionsStack[i]);
         }
         actionsStack = [];
-        currAction = 0;
+        walkThoughExecutor.resetIndex();
     },
 
     resetAction: function(action){
@@ -53,6 +80,10 @@ var walkThoughExecutor = {
                 walkThoughExecutor.destroyPopover(action.selector);
                 break;
         }
+    },
+
+    resetIndex: function(){
+        currAction = 0;
     },
 
     resetWalkthrough: function(){
@@ -69,12 +100,12 @@ var walkThoughExecutor = {
         currAction++;
         var prevAction = actionsStack[prevActionIndex];
         if(currAction + 1 > actionsStack.length){
-            walkThoughExecutor.hidePopover(prevAction.selector);
+            walkThoughExecutor.stopAction(prevAction);
             walkThoughExecutor.onWalkThroughFinish();
         }
         else{
             walkThoughExecutor.onBeforeNext();
-            walkThoughExecutor.hidePopover(prevAction.selector);
+            walkThoughExecutor.stopAction(prevAction);
             walkThoughExecutor.runAction(actionsStack[currAction]);    
             walkThoughExecutor.onAfterNext();
         }
@@ -86,7 +117,8 @@ var walkThoughExecutor = {
             content: action.data.description,
             placement: action.data.placement ? action.data.placement : "auto",
             container: action.data.container ? action.data.container : false,
-            template: '<div class="popover vt-popover walkthrough-popover" role="tooltip"><div class="arrow"></div><h3 class="popover-title"></h3><div class="popover-content"></div><button class="nextPop">Next</button></button></div>'
+            template: '<div class="popover vt-popover walkthrough-popover" role="tooltip"><div class="arrow"></div><h3 class="popover-title"></h3><div class="popover-content"></div><button class="nextPop">Next</button></button></div>',
+            trigger: "manual"
         };
 
        this.showPopover(action.selector, options);
@@ -104,6 +136,56 @@ var walkThoughExecutor = {
 
     destroyPopover: function(selector){
         $(selector).popover("destroy");
+    },
+
+
+    showFloatingButton: function(){
+        $("#"+walkThoughExecutor._floatingButtonSelector).show();
+    },
+
+    hideFloatingButton: function(){
+        $("#"+walkThoughExecutor._floatingButtonSelector).hide();
+    },
+
+    suspendWalkthrough:function(){
+        walkThoughExecutor.hideBackgroundLayer();
+        var currentAction = actionsStack[currAction];
+        walkThoughExecutor.stopAction(currentAction);
+        walkThoughExecutor.renderFloatingButton();
+        walkThoughExecutor.showFloatingButton();
+    },
+
+    resumeWalkthrough: function(){
+        var currentAction = actionsStack[currAction];
+        walkThoughExecutor.runAction(currentAction);
+        walkThoughExecutor.hideFloatingButton();
+        walkThoughExecutor.showBackgroundLayer();
+    },
+
+    renderFloatingButton: function(){
+        if($("#"+walkThoughExecutor._floatingButtonSelector).length){
+            return;
+        }
+        var button = "<div id='"+walkThoughExecutor._floatingButtonSelector+"'>"+walkThoughExecutor._floatingButtonText+"</div>";
+        $('body').append(button);
+        $("#"+walkThoughExecutor._floatingButtonSelector).on("click",this.resumeWalkthrough);
+    },
+
+    renderBackgroundLayer: function(){
+        if($("#"+walkThoughExecutor._backgroundLayerSelector).length){
+            return;
+        }
+        var overlay = "<div id='"+walkThoughExecutor._backgroundLayerSelector+"'></div>";
+        $('body').append(overlay);
+        $("#"+walkThoughExecutor._backgroundLayerSelector).on("click",this.suspendWalkthrough);
+    },
+
+    showBackgroundLayer: function(){
+        $("#"+walkThoughExecutor._backgroundLayerSelector).show();
+    },
+
+    hideBackgroundLayer: function(){
+        $("#"+walkThoughExecutor._backgroundLayerSelector).hide();
     },
 
     registerOnWalkThroughFinish: function(callback){
@@ -135,6 +217,7 @@ var walkThoughExecutor = {
 
     onBeforeWalkthrough: function(){
         console.log("onBeforeWalkthrough");
+        walkThoughExecutor.init();
         for(var i=0; i<beforeWalkthroughStackCallback.length; i++){
             try{
                 beforeWalkthroughStackCallback[i]();
