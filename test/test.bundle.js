@@ -9947,6 +9947,9 @@
 	        walkThoughExecutor.showBackgroundLayer();
 	        walkThoughExecutor.renderFloatingButton();
 	        walkThoughExecutor.hideFloatingButton();
+	        $(window).bind('hashchange', function() {
+	           walkThoughExecutor.resetActions();
+	        });
 	    },
 
 	    setFloatingButtonText: function(text){
@@ -10074,7 +10077,6 @@
 	    },
 
 	    resumeWalkthrough: function(){
-	        console.log("resume");
 	        var currentAction = actionsStack[currAction];
 	        walkThoughExecutor.runAction(currentAction);
 	        walkThoughExecutor.hideFloatingButton();
