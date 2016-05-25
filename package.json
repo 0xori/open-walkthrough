@@ -1,6 +1,6 @@
 {
   "name": "open-walkthrough",
-  "version": "1.0.10",
+  "version": "1.0.11",
   "description": "\"# open-walkthrough\"",
   "main": "./lib/open-walkthrough.js",
   "scripts": {
