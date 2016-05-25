@@ -131,6 +131,7 @@ var walkThoughExecutor = {
     showPopover: function(selector, options){
         $(selector).popover(options);
         $(selector).popover("show");
+        $(".nextPop").off("click");
         $(".nextPop").on("click", this.handleNext);
     },
 

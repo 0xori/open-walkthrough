@@ -9946,7 +9946,8 @@
 	        walkThoughExecutor.renderBackgroundLayer();
 	        walkThoughExecutor.showBackgroundLayer();
 	        walkThoughExecutor.renderFloatingButton();
-	        walkThoughExecutor.hideFloatingButton();
+	        walkThoughExecutor.hideFloatingButton()
+	        // reset actions in case of hash chane (we don't want actions to run on other pages)
 	        $(window).bind('hashchange', function() {
 	           walkThoughExecutor.resetActions();
 	        });
@@ -10048,6 +10049,7 @@
 	    showPopover: function(selector, options){
 	        $(selector).popover(options);
 	        $(selector).popover("show");
+	        $(".nextPop").off("click");
 	        $(".nextPop").on("click", this.handleNext);
 	    },
 
@@ -10209,7 +10211,7 @@
 
 
 	// module
-	exports.push([module.id, "#open-walkthrough-overlay{\r\n    position: absolute;\r\n    top:0;\r\n    left: 0;\r\n    right: 0;\r\n    bottom: 0;\r\n    z-index: 1050;\r\n}\r\n\r\n#open-walkthrough-floating-button{\r\n    position: fixed;\r\n    right: 15px;\r\n    bottom: 15px;\r\n    background: #00abc0;\r\n    cursor: pointer;\r\n    padding: 10px;\r\n}", "", {"version":3,"sources":["/../assets/css/main.css"],"names":[],"mappings":"AAAA;IACI,mBAAmB;IACnB,MAAM;IACN,QAAQ;IACR,SAAS;IACT,UAAU;IACV,cAAc;CACjB;;AAED;IACI,gBAAgB;IAChB,YAAY;IACZ,aAAa;IACb,oBAAoB;IACpB,gBAAgB;IAChB,cAAc;CACjB","file":"main.css","sourcesContent":["#open-walkthrough-overlay{\r\n    position: absolute;\r\n    top:0;\r\n    left: 0;\r\n    right: 0;\r\n    bottom: 0;\r\n    z-index: 1050;\r\n}\r\n\r\n#open-walkthrough-floating-button{\r\n    position: fixed;\r\n    right: 15px;\r\n    bottom: 15px;\r\n    background: #00abc0;\r\n    cursor: pointer;\r\n    padding: 10px;\r\n}"],"sourceRoot":"webpack://"}]);
+	exports.push([module.id, "#open-walkthrough-overlay{\r\n    position: absolute;\r\n    top:0;\r\n    left: 0;\r\n    right: 0;\r\n    bottom: 0;\r\n    z-index: 1000;\r\n}\r\n\r\n#open-walkthrough-floating-button{\r\n    position: fixed;\r\n    right: 15px;\r\n    bottom: 15px;\r\n    background: #00abc0;\r\n    cursor: pointer;\r\n    padding: 10px;\r\n}", "", {"version":3,"sources":["/../assets/css/main.css"],"names":[],"mappings":"AAAA;IACI,mBAAmB;IACnB,MAAM;IACN,QAAQ;IACR,SAAS;IACT,UAAU;IACV,cAAc;CACjB;;AAED;IACI,gBAAgB;IAChB,YAAY;IACZ,aAAa;IACb,oBAAoB;IACpB,gBAAgB;IAChB,cAAc;CACjB","file":"main.css","sourcesContent":["#open-walkthrough-overlay{\r\n    position: absolute;\r\n    top:0;\r\n    left: 0;\r\n    right: 0;\r\n    bottom: 0;\r\n    z-index: 1000;\r\n}\r\n\r\n#open-walkthrough-floating-button{\r\n    position: fixed;\r\n    right: 15px;\r\n    bottom: 15px;\r\n    background: #00abc0;\r\n    cursor: pointer;\r\n    padding: 10px;\r\n}"],"sourceRoot":"webpack://"}]);
 
 	// exports
 
