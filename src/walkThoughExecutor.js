@@ -103,6 +103,9 @@ var walkThoughExecutor = {
 
     resetWalkthrough: function(){
         walkThoughExecutor.resetActions();
+        walkThoughExecutor.resetIndex();
+        walkThoughExecutor.hideBackgroundLayer();
+        walkThoughExecutor.hideFloatingButton();
         beforeWalkthroughStackCallback = [];
         beforeNextStackCallback = [];
         afterNextStackCallback = [];
