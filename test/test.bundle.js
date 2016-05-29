@@ -9973,19 +9973,30 @@
 	    },
 
 	    runAction: function(action){
-	        switch (action.type){
-	            case actionTypes.ACTION_POPOVER:
-	                walkThoughExecutor.renderPopover(action);
-	                break;
+	        try{
+	            switch (action.type){
+	                case actionTypes.ACTION_POPOVER:
+	                    walkThoughExecutor.renderPopover(action);
+	                    break;
+	            }
 	        }
+	        catch (e){
+	            console.error("unable to run action:", action, e);
+	        }
+
 	    },
 
 	    stopAction: function(action){
-	        switch (action.type){
-	            case actionTypes.ACTION_POPOVER:
-	                walkThoughExecutor.hidePopover(action.selector);
-	                break;
+	        try {
+	            switch (action.type){
+	                case actionTypes.ACTION_POPOVER:
+	                    walkThoughExecutor.hidePopover(action.selector);
+	                    break;
+	            }
+	        }catch (e){
+	            console.error("unable to stop action:", action, e);
 	        }
+
 	    },
 
 	    resetActions: function(){
@@ -10072,17 +10083,25 @@
 
 	    suspendWalkthrough:function(){
 	        walkThoughExecutor.hideBackgroundLayer();
-	        var currentAction = actionsStack[currAction];
-	        walkThoughExecutor.stopAction(currentAction);
+	        if(currAction + 1 <= actionsStack.length){
+	            var currentAction = actionsStack[currAction];
+	            walkThoughExecutor.stopAction(currentAction);
+	        }
+	        walkThoughExecutor.resetIndex();
 	        walkThoughExecutor.renderFloatingButton();
 	        walkThoughExecutor.showFloatingButton();
 	    },
 
 	    resumeWalkthrough: function(){
-	        var currentAction = actionsStack[currAction];
-	        walkThoughExecutor.runAction(currentAction);
-	        walkThoughExecutor.hideFloatingButton();
-	        walkThoughExecutor.showBackgroundLayer();
+	        if(currAction + 1 <= actionsStack.length){
+	            var currentAction = actionsStack[currAction];
+	            walkThoughExecutor.runAction(currentAction);
+	            walkThoughExecutor.hideFloatingButton();
+	            walkThoughExecutor.showBackgroundLayer();
+	        }
+	        else {
+	            console.log("couldn't resume Walkthrough");
+	        }
 	    },
 
 	    renderFloatingButton: function(){
@@ -10129,6 +10148,7 @@
 
 	    onWalkThroughFinish: function(){
 	        console.log("onWalkThroughFinish");
+	        walkThoughExecutor.hideBackgroundLayer();
 	        for(var i=0; i<finishStackCallbacks.length; i++){
 	            try{
 	                finishStackCallbacks[i]();
