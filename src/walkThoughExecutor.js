@@ -28,11 +28,7 @@ var walkThoughExecutor = {
         walkThoughExecutor.renderBackgroundLayer();
         walkThoughExecutor.showBackgroundLayer();
         walkThoughExecutor.renderFloatingButton();
-        walkThoughExecutor.hideFloatingButton()
-        // reset actions in case of hash chane (we don't want actions to run on other pages)
-        $(window).bind('hashchange', function() {
-           walkThoughExecutor.resetActions();
-        });
+        walkThoughExecutor.hideFloatingButton();
     },
 
     setFloatingButtonText: function(text){
