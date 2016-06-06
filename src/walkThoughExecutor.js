@@ -75,6 +75,9 @@ var walkThoughExecutor = {
             switch (action.type){
                 case actionTypes.ACTION_POPOVER:
                     walkThoughExecutor.renderPopover(action);
+                    $('html, body').animate({
+                        scrollTop: $(action.selector).offset().top
+                    }, 500);
                     break;
             }
         }
