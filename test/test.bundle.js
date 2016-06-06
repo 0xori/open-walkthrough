@@ -87,6 +87,7 @@
 	var actions = [action1, action2, action3, action4];
 
 	$(document).ready(function () {
+	    walkThoughExecutor.setFloatingButtonTemplate("<div id='customTemplate'>Guide me Yo</div>");
 	    walkThoughExecutor.setActions(actions);
 	    walkThoughExecutor.run();
 	    walkThoughExecutor.registerOnWalkThroughFinish(walkThoughExecutor.resetWalkthrough);
@@ -9942,19 +9943,35 @@
 
 	    _floatingButtonText: "Guide Me",
 
+	    _floatingButtonTemplate: null,
+
+	    _showFloatingButton: true,
+
 	    init: function(){
 	        walkThoughExecutor.renderBackgroundLayer();
 	        walkThoughExecutor.showBackgroundLayer();
 	        walkThoughExecutor.renderFloatingButton();
-	        walkThoughExecutor.hideFloatingButton()
-	        // reset actions in case of hash chane (we don't want actions to run on other pages)
-	        $(window).bind('hashchange', function() {
-	           walkThoughExecutor.resetActions();
-	        });
+	        walkThoughExecutor.hideFloatingButton();
 	    },
 
 	    setFloatingButtonText: function(text){
 	        walkThoughExecutor._floatingButtonText = text;
+	    },
+
+	    /**
+	     * set template to replace the floating button html
+	     * @param template (html)
+	     */
+	    setFloatingButtonTemplate: function(template){
+	        walkThoughExecutor._floatingButtonTemplate = template;
+	    },
+
+	    disableFloatingButton: function(){
+	        walkThoughExecutor._showFloatingButton = false;
+	    },
+
+	    enableFloatingButton: function(){
+	        walkThoughExecutor._showFloatingButton = true;
 	    },
 
 	    setActions: function(actions){
@@ -10021,6 +10038,9 @@
 
 	    resetWalkthrough: function(){
 	        walkThoughExecutor.resetActions();
+	        walkThoughExecutor.resetIndex();
+	        walkThoughExecutor.hideBackgroundLayer();
+	        walkThoughExecutor.hideFloatingButton();
 	        beforeWalkthroughStackCallback = [];
 	        beforeNextStackCallback = [];
 	        afterNextStackCallback = [];
@@ -10088,8 +10108,10 @@
 	            walkThoughExecutor.stopAction(currentAction);
 	        }
 	        walkThoughExecutor.resetIndex();
-	        walkThoughExecutor.renderFloatingButton();
-	        walkThoughExecutor.showFloatingButton();
+	        if(walkThoughExecutor._showFloatingButton){
+	            walkThoughExecutor.renderFloatingButton();
+	            walkThoughExecutor.showFloatingButton();
+	        }
 	    },
 
 	    resumeWalkthrough: function(){
@@ -10108,7 +10130,13 @@
 	        if($("#"+walkThoughExecutor._floatingButtonSelector).length){
 	            return;
 	        }
-	        var button = "<div id='"+walkThoughExecutor._floatingButtonSelector+"'>"+walkThoughExecutor._floatingButtonText+"</div>";
+	        var button;
+	        if(walkThoughExecutor._floatingButtonTemplate != null){
+	            button = "<div id='"+walkThoughExecutor._floatingButtonSelector+"'>"+walkThoughExecutor._floatingButtonTemplate+"</div>";
+	        }
+	        else {
+	            button = "<div id='"+walkThoughExecutor._floatingButtonSelector+"'>"+walkThoughExecutor._floatingButtonText+"</div>";
+	        }
 	        $('body').append(button);
 	        $("#"+walkThoughExecutor._floatingButtonSelector).on("click",this.resumeWalkthrough);
 	    },
