@@ -43,6 +43,6 @@ var actions = [action1, action2, action3, action4];
 $(document).ready(function () {
     walkThoughExecutor.setFloatingButtonTemplate("<div id='customTemplate'>Guide me Yo</div>");
     walkThoughExecutor.setActions(actions);
-    walkThoughExecutor.run();
+    walkThoughExecutor.runButton();
     walkThoughExecutor.registerOnWalkThroughFinish(walkThoughExecutor.resetWalkthrough);
 });

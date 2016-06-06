@@ -89,7 +89,7 @@
 	$(document).ready(function () {
 	    walkThoughExecutor.setFloatingButtonTemplate("<div id='customTemplate'>Guide me Yo</div>");
 	    walkThoughExecutor.setActions(actions);
-	    walkThoughExecutor.run();
+	    walkThoughExecutor.runButton();
 	    walkThoughExecutor.registerOnWalkThroughFinish(walkThoughExecutor.resetWalkthrough);
 	});
 
@@ -9989,14 +9989,16 @@
 	        this.runAction(firstAction);
 	    },
 
+	    runButton: function(){
+	        walkThoughExecutor.onBeforeWalkthrough();
+	        walkThoughExecutor.suspendWalkthrough();
+	    },
+
 	    runAction: function(action){
 	        try{
 	            switch (action.type){
 	                case actionTypes.ACTION_POPOVER:
 	                    walkThoughExecutor.renderPopover(action);
-	                    $('html, body').animate({
-	                        scrollTop: $(action.selector).offset().top
-	                    }, 500);
 	                    break;
 	            }
 	        }
@@ -10085,6 +10087,9 @@
 	        $(selector).popover("show");
 	        $(".nextPop").off("click");
 	        $(".nextPop").on("click", this.handleNext);
+	        $('html, body').animate({
+	            scrollTop: $(selector).offset().top
+	        }, 500);
 	    },
 
 	    hidePopover: function(selector){
