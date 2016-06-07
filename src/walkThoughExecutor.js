@@ -311,4 +311,6 @@ var walkThoughExecutor = {
 
 };
 
+
+export default walkThoughExecutor;
 module.exports = walkThoughExecutor;

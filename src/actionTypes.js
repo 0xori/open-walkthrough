@@ -1,1 +1,3 @@
-module.exports = {ACTION_POPOVER: 1};
+var actionTypes = {ACTION_POPOVER: 1};
+
+module.exports = actionTypes;

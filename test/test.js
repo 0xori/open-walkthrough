@@ -1,11 +1,11 @@
-$ = require("jquery");
-jQuery = require("jquery");
-var walkThoughExecutor = require("../src/walkThoughExecutor");
-var actionTypes = require("../src/actionTypes");
+//$ = require("jquery");
+//jQuery = require("jquery");
+//var walkThoughExecutor = require("../lib/open-walkthrough");
+//var actionTypes = require("../src/actionTypes");
 
 var action1 = {
     selector: '#yo1',
-    type: actionTypes.ACTION_POPOVER,
+    type: 1,
     data: {
         title: "Click Here",
         description: "Get in Shape",
@@ -14,7 +14,7 @@ var action1 = {
 };
 var action2 = {
     selector: '#yo2',
-    type: actionTypes.ACTION_POPOVER,
+    type: 1,
     data: {
         title: "Click Here",
         description: "Get in Shape"
@@ -22,7 +22,7 @@ var action2 = {
 };
 var action3 = {
     selector: '#yo3',
-    type: actionTypes.ACTION_POPOVER,
+    type: 1,
     data: {
         title: "Click Here",
         description: "Get in Shape"
@@ -30,7 +30,7 @@ var action3 = {
 };
 var action4 = {
     selector: '#yo4',
-    type: actionTypes.ACTION_POPOVER,
+    type: 1,
     data: {
         title: "Click Here",
         container: "body",
@@ -41,8 +41,8 @@ var action4 = {
 var actions = [action1, action2, action3, action4];
 
 $(document).ready(function () {
-    walkThoughExecutor.setFloatingButtonTemplate("<div id='customTemplate'>Guide me Yo</div>");
-    walkThoughExecutor.setActions(actions);
-    walkThoughExecutor.runButton();
-    walkThoughExecutor.registerOnWalkThroughFinish(walkThoughExecutor.resetWalkthrough);
+    openWalkthrough.setFloatingButtonTemplate("<div id='customTemplate'>Guide me Yo</div>");
+    openWalkthrough.setActions(actions);
+    openWalkthrough.runButton();
+    openWalkthrough.registerOnWalkThroughFinish(walkThoughExecutor.resetWalkthrough);
 });
