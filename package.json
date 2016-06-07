@@ -2,7 +2,7 @@
   "name": "open-walkthrough",
   "version": "1.0.19",
   "description": "\"# open-walkthrough\"",
-  "main": "./lib/open-walkthrough.js",
+  "main": "./lib/openWalkthrough.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
