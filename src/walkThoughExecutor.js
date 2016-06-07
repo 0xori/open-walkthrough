@@ -28,11 +28,80 @@ var walkThoughExecutor = {
 
     _showFloatingButton: true,
 
-    init: function(){
+    _autoScrollEnabled: true,
+
+    _scrollOffsetElements: {},
+
+    /**
+     *
+     * @param options
+     * {
+     *   floatingButtonText: string,
+     *   floatingButtonTemplate: string (HTML),
+     *   showFloatingButton: boolean,
+     *   autoScrollEnabled: boolean,
+     *   scrollOffsetElements: {key:selector}
+     * }
+     */
+    init: function(options){
+        if(options){
+            if(options.floatingButtonText){
+                walkThoughExecutor._floatingButtonText = options.floatingButtonText;
+            }
+            if(options.floatingButtonTemplate){
+                walkThoughExecutor._floatingButtonTemplate = options.floatingButtonTemplate;
+            }
+            if(options.showFloatingButton){
+                walkThoughExecutor._showFloatingButton = options.showFloatingButton;
+            }
+            if(options.autoScrollEnabled){
+                walkThoughExecutor._autoScrollEnabled = options.autoScrollEnabled;
+            }
+            if(options.scrollOffsetElements){
+                walkThoughExecutor._scrollOffsetElements = options.scrollOffsetElements;
+            }
+        }
+
         walkThoughExecutor.renderBackgroundLayer();
         walkThoughExecutor.showBackgroundLayer();
         walkThoughExecutor.renderFloatingButton();
         walkThoughExecutor.hideFloatingButton();
+    },
+
+    enableAutoScroll: function(){
+        walkThoughExecutor._autoScrollEnabled = true;
+    },
+
+    disableAutoScroll: function(){
+        walkThoughExecutor._autoScrollEnabled = false;
+    },
+
+    /**
+     *
+     * @param elements object with key of your choice & selector as value
+     */
+    setScrollOffsetElements: function(elements){
+        walkThoughExecutor._scrollOffsetElements = elements;
+    },
+
+    addScrollOffsetElement: function(key, selector){
+        if(walkThoughExecutor._scrollOffsetElements[key]){
+            console.log(key+ " offset element already exist");
+        }else {
+            walkThoughExecutor._scrollOffsetElements[key] = selector;
+        }
+    },
+
+    removeScrollOffsetElement: function(key){
+        if(walkThoughExecutor._scrollOffsetElements[key]){
+            delete walkThoughExecutor._scrollOffsetElements[key];
+        }else {
+            console.log(key+ " offset element not exist");
+        }
+    },
+
+    resetScrollOffsetElements: function(){
+        walkThoughExecutor._scrollOffsetElements = {};
     },
 
     setFloatingButtonText: function(text){
@@ -168,9 +237,33 @@ var walkThoughExecutor = {
         $(selector).popover("show");
         $(".nextPop").off("click");
         $(".nextPop").on("click", this.handleNext);
+        if(walkThoughExecutor._autoScrollEnabled){
+            walkThoughExecutor.scrollTo(selector);
+        }
+
+    },
+
+    scrollTo: function(selector){
+        var offset;
+        var scrollSpeed = 600;
+        var offsetElementsHeight = 0;
+        for(var key in walkThoughExecutor._scrollOffsetElements){
+            if($(walkThoughExecutor._scrollOffsetElements[key]).length){
+                offsetElementsHeight += $(walkThoughExecutor._scrollOffsetElements[key]).height();
+            }
+        }
+
+        // Offset anchor location and offset navigation bar if navigation is fixed
+        offset = $(selector).offset().top - $(window).height() / 2 + offsetElementsHeight;
+
+
+        $('html, body').animate({scrollTop:offset}, scrollSpeed);
+
+/*
         $('html, body').animate({
             scrollTop: $(selector).offset().top
         }, 500);
+*/
     },
 
     hidePopover: function(selector){
@@ -277,7 +370,6 @@ var walkThoughExecutor = {
 
     onBeforeWalkthrough: function(){
         console.log("onBeforeWalkthrough");
-        walkThoughExecutor.init();
         for(var i=0; i<beforeWalkthroughStackCallback.length; i++){
             try{
                 beforeWalkthroughStackCallback[i]();

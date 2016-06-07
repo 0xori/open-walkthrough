@@ -41,8 +41,14 @@ var action4 = {
 var actions = [action1, action2, action3, action4];
 
 $(document).ready(function () {
-    openWalkthrough.setFloatingButtonTemplate("<div id='customTemplate'>Guide me Yo</div>");
+    var options = {
+        scrollOffsetElements: {
+            header: ".stiky-header"
+        },
+        floatingButtonTemplate: "<div id='customTemplate'>Guide me Yo</div>"
+    };
+    openWalkthrough.init(options);
     openWalkthrough.setActions(actions);
     openWalkthrough.runButton();
-    openWalkthrough.registerOnWalkThroughFinish(walkThoughExecutor.resetWalkthrough);
+    openWalkthrough.registerOnWalkThroughFinish(openWalkthrough.resetWalkthrough);
 });
